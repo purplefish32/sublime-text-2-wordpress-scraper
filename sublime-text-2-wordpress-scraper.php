@@ -121,11 +121,17 @@ function tokenizeme() {
                 $new_arg_text = trim($arg, "\n\r\t ");
                 $new_arg_text = str_replace('"', "'", $new_arg_text);
                 $new_arg_text = str_replace('$', '\\\$', $new_arg_text);
-                $args[$key] = '${' . ($key+1) . ':' .  $new_arg_text . '}';
+                if( $key == 0)
+                {
+                  $args[$key] = '${' . ($key+1) . ':' .  $new_arg_text . '}';
+                }
+                else{
+                  $args[$key] = '${' . ($key+1) . ':' . ', ' .  $new_arg_text . '}';
+                }
             }
         endif;
-        ?>{"trigger": "<?php echo $function[0]; ?>", "contents": "<?php echo $function[0]; ?>(<?php echo implode(',', $args); ?>)" },
+        ?>{"trigger": "<?php echo $function[0]; ?>", "contents": "<?php echo $function[0]; ?>(<?php echo implode('', $args); ?>)" },
 <?php
     }
     die;
-} 
+}
